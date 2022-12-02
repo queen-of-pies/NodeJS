@@ -33,8 +33,18 @@ async function removeNoteById(id) {
     console.log(chalk.green.inverse("Note was deleted!"))
 }
 
+async function update(id, title) {
+    const notes = await getNotes()
+    const index = notes.findIndex(note=>note.id===id.toString())
+    notes[index].title = title
+    await fs.writeFile(notesPath, JSON.stringify(notes))
+    console.log(chalk.green.inverse("Note was updated!"))
+}
+
 module.exports = {
     addNote,
     printNotes,
-    removeNoteById
+    removeNoteById,
+    getNotes,
+    update
 }
